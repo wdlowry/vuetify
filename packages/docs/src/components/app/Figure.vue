@@ -4,8 +4,9 @@
       caption ? 'mb-6' : 'mb-10'
     ]"
   >
-    <app-img
-      v-bind="attrs"
+    <v-img
+      class="rounded"
+      v-bind="$attrs"
     />
 
     <figcaption
@@ -16,23 +17,21 @@
   </figure>
 </template>
 
-<script>
-  import { defineComponent } from 'vue'
+<script setup>
+  // Utilities
+  import { computed, useAttrs } from 'vue'
 
-  export default defineComponent({
-    name: 'AppFigure',
+  const attrs = useAttrs()
 
-    inheritAttrs: false,
-
-    props: {
-      name: String,
-    },
-
-    setup (props, { attrs }) {
-      return {
-        attrs,
-        caption: attrs.title === 'null' ? null : attrs.title,
-      }
-    },
+  defineProps({
+    name: String,
   })
+
+  const caption = computed(() => attrs.title === 'null' ? null : attrs.title)
+</script>
+
+<script>
+  export default {
+    inheritAttrs: false,
+  }
 </script>

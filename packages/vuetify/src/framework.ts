@@ -2,21 +2,19 @@
 import { createDefaults, DefaultsSymbol } from '@/composables/defaults'
 import { createDisplay, DisplaySymbol } from '@/composables/display'
 import { createIcons, IconSymbol } from '@/composables/icons'
-import { createLocale, LocaleAdapterSymbol } from '@/composables/locale'
+import { createLocale, LocaleSymbol } from '@/composables/locale'
 import { createTheme, ThemeSymbol } from '@/composables/theme'
-import { RtlSymbol } from '@/composables/rtl'
 
 // Utilities
-import { defineComponent, getUid, mergeDeep } from '@/util'
-import { reactive } from 'vue'
+import { defineComponent, getUid, IN_BROWSER, mergeDeep } from '@/util'
+import { nextTick, reactive } from 'vue'
 
 // Types
 import type { App, ComponentPublicInstance, InjectionKey } from 'vue'
 import type { DefaultsOptions } from '@/composables/defaults'
 import type { DisplayOptions } from '@/composables/display'
 import type { IconOptions } from '@/composables/icons'
-import type { LocaleAdapter, LocaleOptions } from '@/composables/locale'
-import type { RtlOptions } from '@/composables/rtl'
+import type { LocaleOptions, RtlOptions } from '@/composables/locale'
 import type { ThemeOptions } from '@/composables/theme'
 
 export * from './composables'
@@ -30,7 +28,7 @@ export interface VuetifyOptions {
   display?: DisplayOptions
   theme?: ThemeOptions
   icons?: IconOptions
-  locale?: (LocaleOptions & RtlOptions) | (LocaleAdapter & RtlOptions)
+  locale?: LocaleOptions & RtlOptions
   ssr?: boolean
 }
 
@@ -69,13 +67,28 @@ export function createVuetify (vuetify: VuetifyOptions = {}) {
     }
 
     theme.install(app)
-    locale.install(app)
 
     app.provide(DefaultsSymbol, defaults)
     app.provide(DisplaySymbol, display)
     app.provide(ThemeSymbol, theme)
     app.provide(IconSymbol, icons)
-    app.provide(LocaleAdapterSymbol, locale.adapter)
+    app.provide(LocaleSymbol, locale)
+
+    if (IN_BROWSER && options.ssr) {
+      if (app.$nuxt) {
+        app.$nuxt.hook('app:suspense:resolve', () => {
+          display.update()
+        })
+      } else {
+        const { mount } = app
+        app.mount = (...args) => {
+          const vm = mount(...args)
+          nextTick(() => display.update())
+          app.mount = mount
+          return vm
+        }
+      }
+    }
 
     getUid.reset()
 
@@ -87,8 +100,7 @@ export function createVuetify (vuetify: VuetifyOptions = {}) {
             display: inject.call(this, DisplaySymbol),
             theme: inject.call(this, ThemeSymbol),
             icons: inject.call(this, IconSymbol),
-            locale: inject.call(this, LocaleAdapterSymbol),
-            rtl: inject.call(this, RtlSymbol),
+            locale: inject.call(this, LocaleSymbol),
           })
         },
       },
@@ -101,7 +113,7 @@ export function createVuetify (vuetify: VuetifyOptions = {}) {
     display,
     theme,
     icons,
-    locale: locale.adapter,
+    locale,
   }
 }
 

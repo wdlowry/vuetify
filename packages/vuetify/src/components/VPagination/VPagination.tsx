@@ -15,11 +15,10 @@ import { makeTagProps } from '@/composables/tag'
 import { makeThemeProps, provideTheme } from '@/composables/theme'
 import { makeVariantProps } from '@/composables/variant'
 import { provideDefaults } from '@/composables/defaults'
-import { useLocale } from '@/composables/locale'
+import { useLocale, useRtl } from '@/composables/locale'
 import { useProxiedModel } from '@/composables/proxiedModel'
 import { useRefs } from '@/composables/refs'
 import { useResizeObserver } from '@/composables/resizeObserver'
-import { useRtl } from '@/composables/rtl'
 
 // Utilities
 import { computed, nextTick, ref, toRef } from 'vue'
@@ -198,6 +197,8 @@ export const VPagination = defineComponent({
         density: toRef(props, 'density'),
         size: toRef(props, 'size'),
         variant: toRef(props, 'variant'),
+        rounded: toRef(props, 'rounded'),
+        elevation: toRef(props, 'elevation'),
       },
     })
 
@@ -228,8 +229,6 @@ export const VPagination = defineComponent({
               ellipsis: false,
               icon: true,
               disabled: !!props.disabled || props.length < 2,
-              elevation: props.elevation,
-              rounded: props.rounded,
               color: isActive ? props.activeColor : props.color,
               ariaCurrent: isActive,
               ariaLabel: t(isActive ? props.currentPageAriaLabel : props.pageAriaLabel, index + 1),

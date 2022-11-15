@@ -12,9 +12,8 @@
   </app-btn>
 </template>
 
-<script lang="ts" setup>
+<script setup>
   // Components
-  import AppMenu from '@/components/app/menu/Menu.vue'
   import ChevronDown from '@/components/icons/ChevronDown.vue'
 
   // Composables
@@ -26,14 +25,6 @@
   const { t } = useI18n()
   const title = t('support')
   const items = computed(() => ([
-    { subheader: t('professional-support') },
-    {
-      title: 'direct-support',
-      to: {
-        name: 'introduction-support',
-      },
-    },
-    { divider: true },
     { subheader: t('community-support') },
     {
       title: 'Discord',

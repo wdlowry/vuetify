@@ -17,7 +17,8 @@
     "modifiers": "Modifiers",
     "props": "Props",
     "sass": "SASS Variables",
-    "slots": "Slots"
+    "slots": "Slots",
+    "exposed": "Exposed"
   },
   "application": "Application",
   "apply": "Apply",
@@ -60,7 +61,7 @@
   "community": "Community",
   "community-support": "Community support",
   "contact-us": "Contact Us",
-  "cookie-policy": "Cookie policy",
+  "cookie-policy": "Cookie Policy",
   "copy-example-source": "Copy example source",
   "copyright": "Copyright {0}",
   "customization": "Customization",
@@ -82,7 +83,7 @@
   "done": "All done",
   "edit-in-codepen": "Edit in Codepen",
   "edit": "Edit",
-  "enterprise": "For Enterprise",
+  "enterprise": "Enterprise",
   "email-address": "Email address",
   "extra-large": "Extra large",
   "extra-small": "Extra small",
@@ -111,6 +112,7 @@
   "laptop": "Laptop",
   "large": "Large",
   "latest-release": "Latest release",
+  "layout": "Layout",
   "layout-link": "Link to layout for {name}",
   "learn": "Learn",
   "light": "Light",
@@ -143,6 +145,7 @@
   "privacy-policy": "Privacy Policy",
   "professional-support": "Professional support",
   "progress": "Progress",
+  "providers": "Providers",
   "published-on": "Published on {date}",
   "pwa": {
     "install": "Install Vuetify Documentation",

@@ -20,27 +20,28 @@
 
       <app-bar-support-menu />
 
-      <template v-if="mdAndUp">
-        <app-bar-team-link />
+      <app-bar-team-link />
 
-        <app-vertical-divider />
+      <app-bar-enterprise-link />
 
-        <app-bar-store-link />
+      <app-vertical-divider v-if="smAndUp" />
 
-        <app-bar-jobs-link />
+      <app-bar-store-link v-if="mdAndUp" />
 
-        <app-bar-notifications-menu />
+      <app-bar-jobs-link v-if="mdAndUp" />
 
-        <app-bar-settings-toggle />
+      <app-bar-notifications-menu v-if="smAndUp" />
 
-        <app-bar-language-menu />
-      </template>
+      <app-bar-settings-toggle v-if="smAndUp" />
+
+      <app-bar-language-menu v-if="smAndUp" />
     </template>
   </v-app-bar>
 </template>
 
 <script setup>
   // Components
+  import AppBarEnterpriseLink from './EnterpriseLink.vue'
   import AppBarJobsLink from './JobsLink.vue'
   import AppBarLanguageMenu from './LanguageMenu.vue'
   import AppBarLearnMenu from './LearnMenu.vue'

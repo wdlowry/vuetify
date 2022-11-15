@@ -2,14 +2,15 @@
   <v-defaults-provider scoped>
     <v-sheet
       border
-      class="mb-9"
+      class="mb-9 overflow-hidden"
       rounded
     >
       <v-toolbar
+        v-if="!preview"
         border="b"
         class="px-1"
-        height="44"
         flat
+        height="44"
         rounded="t"
       >
         <v-fade-transition>
@@ -30,7 +31,7 @@
         >
           <template #activator="{ props: tooltip }">
             <v-btn
-              class="ml-2 text-medium-emphasis"
+              class="ms-2 text-medium-emphasis"
               density="comfortable"
               variant="text"
               v-bind="mergeProps(action as any, tooltip)"
@@ -62,7 +63,7 @@
                 <v-theme-provider :theme="theme">
                   <app-markup
                     :code="section.content"
-                    class="rounded-0"
+                    :rounded="false"
                   />
                 </v-theme-provider>
               </template>
@@ -105,6 +106,7 @@
       required: true,
     },
     open: Boolean,
+    preview: Boolean,
   })
 
   function parseTemplate (target: string, template: string) {

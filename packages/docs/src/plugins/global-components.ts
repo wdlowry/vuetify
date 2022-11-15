@@ -1,17 +1,17 @@
+// Components
 import Alert from '@/components/Alert.vue'
 import ApiInline from '@/components/api/Inline.vue'
 import ApiLinks from '@/components/api/Links.vue'
 import ApiSection from '@/components/api/Section.vue'
-import ApiTable from '@/components/api/Table.vue'
 import AppBtn from '@/components/app/Btn.vue'
 import AppCaption from '@/components/app/Caption.vue'
 import AppDivider from '@/components/app/Divider.vue'
 import AppFigure from '@/components/app/Figure.vue'
 import AppHeading from '@/components/app/Heading.vue'
 import AppHeadline from '@/components/app/Headline.vue'
-import AppImg from '@/components/app/Img.vue'
 import AppLink from '@/components/app/Link.vue'
 import AppMarkdown from '@/components/app/Markdown.vue'
+import AppMenu from '@/components/app/menu/Menu.vue'
 import AppMarkup from '@/components/app/Markup.vue'
 import AppSheet from '@/components/app/Sheet.vue'
 import AppTable from '@/components/app/Table.vue'
@@ -31,6 +31,7 @@ import UsageExample from '@/components/examples/UsageExample.vue'
 import VueFile from '@/components/examples/VueFile.vue'
 import Vuetify from '@/components/promoted/Vuetify.vue'
 
+// Types
 import type { GlobalComponentsPlugin } from '@/types'
 
 export const useGlobalComponents: GlobalComponentsPlugin = ({ app }) => {
@@ -42,6 +43,7 @@ export const useGlobalComponents: GlobalComponentsPlugin = ({ app }) => {
   app.component('AppLink', AppLink)
   app.component('AppMarkdown', AppMarkdown)
   app.component('AppMarkup', AppMarkup)
+  app.component('AppMenu', AppMenu)
   app.component('AppSheet', AppSheet)
   app.component('AppTable', AppTable)
   app.component('AppTitle', AppTitle)
@@ -53,8 +55,6 @@ export const useGlobalComponents: GlobalComponentsPlugin = ({ app }) => {
   app.component('ApiInline', ApiInline)
   app.component('ApiLinks', ApiLinks)
   app.component('ApiSection', ApiSection)
-  app.component('ApiTable', ApiTable)
-  app.component('AppImg', AppImg)
   app.component('Backmatter', Backmatter)
   app.component('Carbon', Carbon)
   app.component('Discovery', Discovery)

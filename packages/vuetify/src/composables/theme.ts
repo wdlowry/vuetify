@@ -139,9 +139,10 @@ const defaultThemeOptions: Exclude<ThemeOptions, false> = {
         'activated-opacity': 0.12,
         'pressed-opacity': 0.12,
         'dragged-opacity': 0.08,
-        'kbd-background-color': '#212529',
-        'kbd-color': '#FFFFFF',
-        'code-background-color': '#C2C2C2',
+        'theme-kbd': '#212529',
+        'theme-on-kbd': '#FFFFFF',
+        'theme-code': '#F5F5F5',
+        'theme-on-code': '#000000',
       },
     },
     dark: {
@@ -173,9 +174,10 @@ const defaultThemeOptions: Exclude<ThemeOptions, false> = {
         'activated-opacity': 0.12,
         'pressed-opacity': 0.16,
         'dragged-opacity': 0.08,
-        'kbd-background-color': '#212529',
-        'kbd-color': '#FFFFFF',
-        'code-background-color': '#B7B7B7',
+        'theme-kbd': '#212529',
+        'theme-on-kbd': '#FFFFFF',
+        'theme-code': '#343434',
+        'theme-on-code': '#CCCCCC',
       },
     },
   },
@@ -186,7 +188,7 @@ function parseThemeOptions (options: ThemeOptions = defaultThemeOptions): Intern
 
   const themes: Record<string, InternalThemeDefinition> = {}
   for (const [key, theme] of Object.entries(options.themes ?? {})) {
-    const defaultTheme = theme.dark
+    const defaultTheme = theme.dark || key === 'dark'
       ? defaultThemeOptions.themes?.dark
       : defaultThemeOptions.themes?.light
     themes[key] = mergeDeep(defaultTheme, theme) as InternalThemeDefinition
@@ -217,6 +219,9 @@ export function createTheme (options?: ThemeOptions): ThemeInstance & { install:
       if (parsedOptions.variations) {
         for (const name of parsedOptions.variations.colors) {
           const color = theme.colors[name]
+
+          if (!color) continue
+
           for (const variation of (['lighten', 'darken'] as const)) {
             const fn = variation === 'lighten' ? lighten : darken
             for (const amount of createRange(parsedOptions.variations[variation], 1)) {
