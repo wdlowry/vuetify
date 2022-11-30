@@ -40,20 +40,31 @@ export function rpath (path = '') {
   const locale = preferredLocale()
   const [url, hash] = path.split('#')
 
+<<<<<<< Updated upstream
   return leadingSlash(trailingSlash([
+=======
+  return trailingSlash([
+>>>>>>> Stashed changes
     '',
     locale,
     ...url.split('/').filter(p => !!p && p !== locale),
     hash ? `#${hash}` : null,
+<<<<<<< Updated upstream
   ].filter(v => v != null).join('/')))
 }
 
 export function leadingSlash (str: string) {
   return str.startsWith('/') ? str : '/' + str
+=======
+  ].filter(v => v != null).join('/'))
+>>>>>>> Stashed changes
 }
 
 export function trailingSlash (str: string) {
-  return str.endsWith('/') ? str : str + '/'
+  str = str.endsWith('/') ? str : str + '/'
+  str = str.startsWith('/') ? str : '/' + str
+
+  return str
 }
 
 export const generatedRoutes = generatedPages.map(route => ({

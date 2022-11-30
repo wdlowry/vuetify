@@ -1,5 +1,9 @@
 ---
+<<<<<<< Updated upstream
 layout: home
+=======
+nav: Landing page
+>>>>>>> Stashed changes
 meta:
   title: Vuetify — A UI Component Framework for Vue
   description: Vuetify is a no design skills required UI Component Framework for Vue. It provides you with all of the tools necessary to create beautiful content rich web applications.
