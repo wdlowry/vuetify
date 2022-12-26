@@ -1,6 +1,6 @@
 <template>
   <a
-    v-if="ad"
+    v-if="promotion"
     class="d-flex mb-4"
     style="max-width: 640px;"
     v-bind="attrs"
@@ -13,7 +13,6 @@
       max-width="640"
       outlined
     >
-
       <v-img
         :src="background"
         class="flex-1-1-auto rounded"
@@ -22,18 +21,23 @@
       >
         <div class="d-flex align-center fill-height">
           <v-img
-            :alt="`Link to ${ad.title}`"
+            v-if="mdAndUp"
+            :alt="`Link to ${promotion.title}`"
             :src="logo"
             class="mx-2"
             contain
             height="56"
             max-width="56"
+            theme="light"
           />
 
           <app-markdown
-            v-if="description"
+            :class="[
+              smAndDown && 'ms-6',
+              isDark ? 'text-grey-darken-4' : 'text-white'
+            ]"
             :content="description"
-            class="text-subtitle-2 text-sm-h6 font-weight-light text-white"
+            class="text-subtitle-1 text-sm-h6 font-weight-light"
           />
         </div>
       </v-img>
@@ -46,14 +50,12 @@
   import PromotedBase from './Base.vue'
 
   // Composables
-  import { createAdProps, useAd } from '@/composables/ad'
+  import { createPromotionProps, usePromotion } from '@/composables/promotion'
+  import { useDisplay } from 'vuetify'
   import { useGtag } from 'vue-gtag-next'
 
-  // Utilities
-  import { computed } from 'vue'
-
   const props = defineProps({
-    ...createAdProps(),
+    ...createPromotionProps(),
 
     medium: {
       type: String,
@@ -61,21 +63,12 @@
     },
   })
 
-  const { ad, attrs } = useAd(props)
+  const { background, logo, promotion, description, attrs, isDark } = usePromotion(props)
   const { event } = useGtag()
-
-  const description = computed(() => ad.value?.metadata?.description_short || ad.value?.metadata?.description)
-  const logo = computed(() => {
-    if (props.medium === 'promoted') {
-      return ad.value?.metadata?.images?.preview?.url || ad.value?.metadata?.images?.logo?.url
-    }
-
-    return ad.value?.metadata?.images?.logo?.url
-  })
-  const background = computed(() => ad.value?.metadata?.images?.background?.url)
+  const { smAndDown, mdAndUp } = useDisplay()
 
   function onClick () {
-    const slug = ad.value?.slug
+    const slug = promotion.value?.slug
 
     if (!slug) return
 
